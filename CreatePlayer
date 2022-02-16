@@ -1,0 +1,205 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CreatePlayer : MonoBehaviour
+{
+    // Criando Lista De Partes Pra Construção Do Player
+    [Space]
+    [Header("Partes Do Player")]
+    public Sprite[] head;
+    public Sprite[] hair;
+    public Sprite[] leftLeg;
+    public Sprite[] rightLeg;
+    public Sprite[] leftArm;
+    public Sprite[] righrArm;
+
+    [Space]
+    [Header("Player Principal")]
+    public GameObject headPlayer;
+    public GameObject hairPlayer;
+    public GameObject leftLegPlayer;
+    public GameObject rightLegPlayer;
+    public GameObject leftArmPlayer;
+    public GameObject righrArmPlayer;
+
+    private int positionHead = 0;
+    private int positionHair = 0;
+    private int positionLeftLeg = 0;
+    private int positionRightLeg = 0;
+    private int positionLeftArm = 0;
+    private int positionRighrArm = 0;
+
+    //Verifica Se a um dos sprites de braço é uma protese, se for a corde dela recebe branco,
+    //se nao a cor recebe a mesma cor da cabeca do Player
+    private void Update()
+    {
+        if (leftArmPlayer.GetComponent<SpriteRenderer>().sprite.name == "próteses_1")
+        {
+            leftArmPlayer.GetComponent<SpriteRenderer>().color = Color.white;
+            if (righrArmPlayer.GetComponent<SpriteRenderer>().sprite.name == "próteses_0")
+            {
+                righrArmPlayer.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            else
+            {
+                righrArmPlayer.GetComponent<SpriteRenderer>().color = headPlayer.GetComponent<SpriteRenderer>().color;
+            }
+        }
+        else {
+            leftArmPlayer.GetComponent<SpriteRenderer>().color = headPlayer.GetComponent<SpriteRenderer>().color;
+        }
+    }
+
+    //Passa Todas As Cabeças Uma Por Uma
+    public void NextHead(int x){
+        // Se x for 0 ele vai pra frente na lista
+        if (x == 0)
+        {
+            //Se a posicao atual de Head + 1 for menor que a lista
+            //Entao, passa pra proxima posicao da lista 
+            if ((positionHead + 1) < head.Length)
+            {
+                positionHead += 1;
+                headPlayer.GetComponent<SpriteRenderer>().sprite = head[positionHead];
+            }
+            //Se não, head volta pra primeria posicao da lista
+            else {
+                positionHead = 0;
+                headPlayer.GetComponent<SpriteRenderer>().sprite = head[positionHead];
+            }
+        }
+        // Se x for 1 ele vai pra tras na lista
+        else {
+            //Se a posicao atual de Head - 1 for Maior que 0
+            //Entao, passa pra proxima posicao da lista 
+            if (positionHead > 0)
+            {
+                positionHead -= 1;
+                headPlayer.GetComponent<SpriteRenderer>().sprite = head[positionHead];
+            }
+            //Se não, head vai pra Ultima posicao da lista
+            else
+            {
+                positionHead = head.Length - 1;
+                headPlayer.GetComponent<SpriteRenderer>().sprite = head[positionHead];
+            }
+        }
+    }
+    //Passa Todos Os Cabelos Um Por Um
+    public void NextHair(int x)
+    {
+        Debug.Log("Click : " + x);
+        // Se x for 0 ele vai pra frente na lista
+        if (x == 0)
+        {
+            //Se a posicao atual de Head + 1 for menor que a lista
+            //Entao, passa pra proxima posicao da lista 
+            if ((positionHair + 1) < hair.Length)
+            {
+                positionHair += 1;
+                hairPlayer.GetComponent<SpriteRenderer>().sprite = hair[positionHair];
+            }
+            //Se não, head volta pra primeria posicao da lista
+            else
+            {
+                positionHair = 0;
+                hairPlayer.GetComponent<SpriteRenderer>().sprite = hair[positionHair];
+            }
+        }
+        // Se x for 1 ele vai pra tras na lista
+        else
+        {
+            //Se a posicao atual de Head - 1 for Maior que 0
+            //Entao, passa pra proxima posicao da lista 
+            if (positionHair > 0)
+            {
+                positionHair -= 1;
+                hairPlayer.GetComponent<SpriteRenderer>().sprite = hair[positionHair];
+            }
+            //Se não, head vai pra Ultima posicao da lista
+            else
+            {
+                positionHair = hair.Length - 1;
+                hairPlayer.GetComponent<SpriteRenderer>().sprite = hair[positionHair];
+                Debug.Log("Hair Position : " + positionHair);
+            }
+        }
+    }
+    public void NextLeftArm(int x)
+    {
+        Debug.Log("Click : " + x);
+        // Se x for 0 ele vai pra frente na lista
+        if (x == 0)
+        {
+            //Se a posicao atual de Head + 1 for menor que a lista
+            //Entao, passa pra proxima posicao da lista 
+            if ((positionLeftArm + 1) < leftArm.Length)
+            {
+                positionLeftArm += 1;
+                leftArmPlayer.GetComponent<SpriteRenderer>().sprite = leftArm[positionLeftArm];
+            }
+            //Se não, head volta pra primeria posicao da lista
+            else
+            {
+                positionLeftArm = 0;
+                leftArmPlayer.GetComponent<SpriteRenderer>().sprite = leftArm[positionLeftArm];
+            }
+        }
+        // Se x for 1 ele vai pra tras na lista
+        else
+        {
+            //Se a posicao atual de Head - 1 for Maior que 0
+            //Entao, passa pra proxima posicao da lista 
+            if (positionLeftArm > 0)
+            {
+                positionLeftArm -= 1;
+                leftArmPlayer.GetComponent<SpriteRenderer>().sprite = leftArm[positionLeftArm];
+            }
+            //Se não, head vai pra Ultima posicao da lista
+            else
+            {
+                positionLeftArm = leftArm.Length - 1;
+                leftArmPlayer.GetComponent<SpriteRenderer>().sprite = leftArm[positionLeftArm];
+            }
+        }
+    }
+    public void NextRightArm(int x)
+    {
+        Debug.Log("Click : " + x);
+        // Se x for 0 ele vai pra frente na lista
+        if (x == 0)
+        {
+            //Se a posicao atual de Head + 1 for menor que a lista
+            //Entao, passa pra proxima posicao da lista 
+            if ((positionRighrArm + 1) < righrArm.Length)
+            {
+                positionRighrArm += 1;
+                righrArmPlayer.GetComponent<SpriteRenderer>().sprite = righrArm[positionRighrArm];
+            }
+            //Se não, head volta pra primeria posicao da lista
+            else
+            {
+                positionRighrArm = 0;
+                righrArmPlayer.GetComponent<SpriteRenderer>().sprite = righrArm[positionRighrArm];
+            }
+        }
+        // Se x for 1 ele vai pra tras na lista
+        else
+        {
+            //Se a posicao atual de Head - 1 for Maior que 0
+            //Entao, passa pra proxima posicao da lista 
+            if (positionRighrArm > 0)
+            {
+                positionRighrArm -= 1;
+                righrArmPlayer.GetComponent<SpriteRenderer>().sprite = righrArm[positionRighrArm];
+            }
+            //Se não, head vai pra Ultima posicao da lista
+            else
+            {
+                positionRighrArm = righrArm.Length - 1;
+                righrArmPlayer.GetComponent<SpriteRenderer>().sprite = righrArm[positionRighrArm];
+            }
+        }
+    }
+}
