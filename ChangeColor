@@ -1,0 +1,157 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ChangeColor : MonoBehaviour
+{
+    [Header("Skin Color")]
+    public Color[] colorsSkin;
+    public Slider slider_color;
+    public Image img_handle;
+    private Texture2D hueTex;
+    public GameObject[] skins;
+    int valueSliderSkinColor;
+    public Text skinText;
+
+    [Space]
+
+    [Header("Hair Color")]
+    public Color[] colorsHair;
+    public Slider sliderColorHair;
+    public Image hairHandle;
+    private Texture2D hueTexHair;
+    public GameObject hair;
+    int valueSliderHairColor;
+    public Text hairText;
+
+    [Space]
+
+    [Header("Left Eye")]
+    public Color[] colorsLeftEye;
+    public Slider sliderColorLeftEye;
+    public Image leftEyeHandle;
+    private Texture2D hueTexLeftEye;
+    public GameObject leftEyE;
+    int valueSliderLeftEyeColor;
+    public Text leftEyeText;
+
+    [Space]
+
+    [Header("Right Eye")]
+    public Color[] colorsRightEye;
+    public Slider sliderColorRightEye;
+    public Image rightEyeHandle;
+    private Texture2D hueTexRightEye;
+    public GameObject rightEyE;
+    int valueSliderRightEyeColor;
+    public Text rightEyeText;
+
+    void Start()
+    {
+        //Cria Um Barra Com As Cores De Pele
+        img_handle.color = Color.red;
+        hueTex = new Texture2D(colorsSkin.Length, 1);
+        hueTex.SetPixels(colorsSkin);
+        hueTex.Apply();
+        slider_color.transform.Find("BackgroundSkin").GetComponent<Image>().sprite =
+            Sprite.Create(hueTex, new Rect(Vector2.zero, new Vector2(colorsSkin.Length, 1)), Vector2.one * 0.5f);
+
+        //Cria Um Barra Com As Cores Do Cabelo
+        hairHandle.color = Color.red;
+        hueTexHair = new Texture2D(colorsHair.Length, 1);
+        hueTexHair.SetPixels(colorsHair);
+        hueTexHair.Apply();
+        sliderColorHair.transform.Find("BackgroundHair").GetComponent<Image>().sprite =
+            Sprite.Create(hueTexHair, new Rect(Vector2.zero, new Vector2(colorsHair.Length, 1)), Vector2.one * 0.5f);
+
+        //Cria Um Barra Com As Cores Do Olho Esquerdo
+        rightEyeHandle.color = Color.red;
+        hueTexRightEye = new Texture2D(colorsRightEye.Length, 1);
+        hueTexRightEye.SetPixels(colorsRightEye);
+        hueTexRightEye.Apply();
+        sliderColorRightEye.transform.Find("BackgroundRightEye").GetComponent<Image>().sprite =
+            Sprite.Create(hueTexRightEye, new Rect(Vector2.zero, new Vector2(colorsRightEye.Length, 1)), Vector2.one * 0.5f);
+
+        //Cria Um Barra Com As Cores Do Olho Direiro
+        leftEyeHandle.color = Color.red;
+        hueTexLeftEye = new Texture2D(colorsLeftEye.Length, 1);
+        hueTexLeftEye.SetPixels(colorsLeftEye);
+        hueTexLeftEye.Apply();
+        sliderColorLeftEye.transform.Find("BackgroundLeftEye").GetComponent<Image>().sprite =
+            Sprite.Create(hueTexLeftEye, new Rect(Vector2.zero, new Vector2(colorsLeftEye.Length, 1)), Vector2.one * 0.5f);
+
+        skinText.text = "1";
+        hairText.text = "1";
+        leftEyeText.text = "1";
+        rightEyeText.text = "1";
+    }
+    private void Update()
+    {
+        valueSliderSkinColor = (int)slider_color.value;
+        Color c = hueTex.GetPixel(valueSliderSkinColor, 5);
+        img_handle.color = c;
+        //Debug.Log("Cor De Pele : "+c);
+
+        skinText.text = slider_color.value.ToString();
+        //Pinta O Marcador Com A Cor Específica
+        valueSliderHairColor = (int)sliderColorHair.value;
+        Color x = hueTexHair.GetPixel(valueSliderHairColor, 5);
+        hairHandle.color = x;
+        //Debug.Log("Cor De Cabelo : " + x);
+
+        hairText.text = sliderColorHair.value.ToString();
+
+        //Pinta O Marcador Com A Cor Específica
+        valueSliderLeftEyeColor = (int)sliderColorLeftEye.value;
+        Color el = hueTexLeftEye.GetPixel(valueSliderLeftEyeColor, 5);
+        leftEyeHandle.color = el;
+        //Debug.Log("Cor : " + el);
+
+        leftEyeText.text = sliderColorLeftEye.value.ToString();
+
+        //Pinta O Marcador Com A Cor Específica
+        valueSliderRightEyeColor = (int)sliderColorRightEye.value;
+        Color er = hueTexRightEye.GetPixel(valueSliderRightEyeColor, 5);
+        rightEyeHandle.color = er;
+        //Debug.Log("Cor : " + er);
+
+        rightEyeText.text = sliderColorRightEye.value.ToString();
+
+    }
+    //Pinta A Pele Com A Cor Do Marcador
+    public void ColorSkin(){
+
+        foreach (GameObject s in skins)
+        {
+            if (s.GetComponent<SpriteRenderer>().sprite.name == "próteses_1" || s.GetComponent<SpriteRenderer>().sprite.name == "próteses_0")
+            {
+                //Se o sprite for de uma protese, entao fica com a cor Branca
+                s.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            else {
+                //Se Não, altera a cor
+                s.GetComponent<SpriteRenderer>().color = img_handle.color;
+            }
+        }
+    }
+    //Pinta O Cabelo Com A Cor Do Marcador
+    public void ColorHair()
+    {
+        Debug.Log("Slider :" + sliderColorHair.value.ToString());
+
+        hair.GetComponent<SpriteRenderer>().color = hairHandle.color; 
+    }
+    //Pinta O Olho Esquerdo Com A Cor Do Marcador
+    public void ColorLeftEye()
+    {
+        
+        leftEyE.GetComponent<SpriteRenderer>().color = leftEyeHandle.color;
+    }
+    //Pinta O Olho Direito Com A Cor Do Marcador
+    public void ColorRightEye()
+    {
+        rightEyE.GetComponent<SpriteRenderer>().color = rightEyeHandle.color;
+    }
+}
+
